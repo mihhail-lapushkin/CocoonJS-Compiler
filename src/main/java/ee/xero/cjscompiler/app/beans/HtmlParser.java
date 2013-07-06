@@ -22,6 +22,9 @@ public class HtmlParser {
 	@Value("${js.ignore}")
 	private String[] ignoreJS;
 	
+	@Value("${js.path.partsToStrip}")
+	private String[] partsToStrip;
+	
 	private boolean isIgnored(String line) {
 		for (String js : ignoreJS) {
 			if (line.contains(js + ".js")) {
@@ -30,6 +33,14 @@ public class HtmlParser {
 		}
 		
 		return false;
+	}
+	
+	private String stripPathParts(String url) {
+		for (String part : partsToStrip) {
+			url = url.replace(part, "");
+		}
+		
+		return url;
 	}
 	
 	public List<File> findJsFiles(String html) throws IOException {
@@ -50,7 +61,7 @@ public class HtmlParser {
 				Matcher m = jsPattern.matcher(line);
 
 				if (m.find()) {
-					scripts.add(new File(m.group(1)));
+					scripts.add(new File(stripPathParts(m.group(1))));
 				}
 			}
 		}
