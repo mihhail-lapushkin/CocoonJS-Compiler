@@ -105,9 +105,13 @@ public class CocoonJsCompiler {
 	private void deleteUneededSoundFolders(String audioResourcesPath) throws IOException {
 		LOG.info("[5] Deleting unneeded sound folders");
 		
-		for (File dir : new File(audioResourcesPath).listFiles()) {
-			if (!dir.getName().equals(soundDir)) {
-				deleteDirectory(dir);
+		for (File f : new File(audioResourcesPath).listFiles()) {
+			if (!f.getName().equals(soundDir)) {
+				if (f.isDirectory()) {
+					deleteDirectory(f);
+				} else {
+					f.delete();
+				}
 			}
 		}
 	}
