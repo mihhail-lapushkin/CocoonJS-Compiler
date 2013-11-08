@@ -45,7 +45,7 @@ public class ClosureCompilerClient {
 	}
 	
 	private String stripBreakes(String str) {
-		return str.replaceAll(LINE_BREAK_PATTERN, "");
+		return str.replaceAll(LINE_BREAK_PATTERN, " ");
 	}
 	
 	private HttpPost composeRequest(String code, CompilationLevel level) throws UnsupportedEncodingException {
